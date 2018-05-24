@@ -479,11 +479,14 @@ dictEntry *dictFind(dict *d, const void *key)
     uint64_t h, idx, table;
 
     if (d->ht[0].used + d->ht[1].used == 0) return NULL; /* dict is empty */
+    // LYQ:what to return if dict is rehasing? Why?
     if (dictIsRehashing(d)) _dictRehashStep(d);
     h = dictHashKey(d, key);
     for (table = 0; table <= 1; table++) {
+	// LYQ:how the hash function work?
         idx = h & d->ht[table].sizemask;
         he = d->ht[table].table[idx];
+	// LYQ:Collision resolution by separate chaining
         while(he) {
             if (key==he->key || dictCompareKeys(d, key, he->key))
                 return he;

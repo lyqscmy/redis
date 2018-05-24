@@ -157,13 +157,15 @@ void psetexCommand(client *c) {
 int getGenericCommand(client *c) {
     robj *o;
 
+    // the key does not exist the special value nil is returned
     if ((o = lookupKeyReadOrReply(c,c->argv[1],shared.nullbulk)) == NULL)
         return C_OK;
 
+    //  An error is returned if the value stored at key is not a string
     if (o->type != OBJ_STRING) {
         addReply(c,shared.wrongtypeerr);
         return C_ERR;
-    } else {
+    } else { // Get the value of key
         addReplyBulk(c,o);
         return C_OK;
     }

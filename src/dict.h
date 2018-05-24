@@ -56,6 +56,7 @@ typedef struct dictEntry {
 } dictEntry;
 
 typedef struct dictType {
+    // LYQ:function pointer? why need type signature
     uint64_t (*hashFunction)(const void *key);
     void *(*keyDup)(void *privdata, const void *key);
     void *(*valDup)(void *privdata, const void *obj);

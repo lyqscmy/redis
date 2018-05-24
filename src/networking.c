@@ -308,6 +308,7 @@ void _addReplyStringToList(client *c, const char *s, size_t len) {
  * The following functions are the ones that commands implementations will call.
  * -------------------------------------------------------------------------- */
 
+// LYQ:Background thread flush client output buffer period? Where is the buffer sit? how it work with ae?
 void addReply(client *c, robj *obj) {
     if (prepareClientToWrite(c) != C_OK) return;
 

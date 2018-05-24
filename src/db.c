@@ -51,8 +51,10 @@ void updateLFU(robj *val) {
  * implementations that should instead rely on lookupKeyRead(),
  * lookupKeyWrite() and lookupKeyReadWithFlags(). */
 robj *lookupKey(redisDb *db, robj *key, int flags) {
+    // LYQ:lookup dict by key
     dictEntry *de = dictFind(db->dict,key->ptr);
     if (de) {
+        // LYQ:get val from dictEntry
         robj *val = dictGetVal(de);
 
         /* Update the access time for the ageing algorithm.

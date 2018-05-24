@@ -338,6 +338,8 @@ static int processTimeEvents(aeEventLoop *eventLoop) {
     return processed;
 }
 
+
+// LYQ:what does it mean pending?
 /* Process every pending time event, then every pending file event
  * (that may be registered by time event callbacks just processed).
  * Without special flags the function sleeps until some file event
@@ -371,6 +373,7 @@ int aeProcessEvents(aeEventLoop *eventLoop, int flags)
 
         if (flags & AE_TIME_EVENTS && !(flags & AE_DONT_WAIT))
             shortest = aeSearchNearestTimer(eventLoop);
+	// LYQ:process timeevent
         if (shortest) {
             long now_sec, now_ms;
 
@@ -411,6 +414,7 @@ int aeProcessEvents(aeEventLoop *eventLoop, int flags)
         if (eventLoop->aftersleep != NULL && flags & AE_CALL_AFTER_SLEEP)
             eventLoop->aftersleep(eventLoop);
 
+	// LYQ:process file event
         for (j = 0; j < numevents; j++) {
             aeFileEvent *fe = &eventLoop->events[eventLoop->fired[j].fd];
             int mask = eventLoop->fired[j].mask;
